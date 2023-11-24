@@ -111,7 +111,8 @@ const useFilter = () => {
     }
   };
 
-  const handleValueChange = (newValue) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleValueChange = (newValue: any) => {
     setDate(newValue);
   };
 
@@ -144,7 +145,8 @@ const useFilter = () => {
     setDataFiltered(dataFiltered);
   };
 
-  const validNumberSheets = (e, inputField: boolean) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const validNumberSheets = (e: any, inputField: boolean) => {
     e.preventDefault();
     e.stopPropagation();
     console.log("numberSheets");

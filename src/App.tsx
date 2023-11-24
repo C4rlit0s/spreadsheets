@@ -97,6 +97,8 @@ function App() {
             <div className="flex justify-between">
               <div className="w-1/2">
                 <Datepicker
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                  //@ts-expect-error
                   value={date}
                   onChange={handleValueChange}
                   primaryColor={"amber"}
