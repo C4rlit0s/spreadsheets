@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { DataFilteredProps } from "../interfaces/interfaces";
+import { parse } from "date-fns";
 
 const Modal = ({
   showModal,
@@ -11,6 +12,16 @@ const Modal = ({
   dataFiltered: DataFilteredProps[];
 }) => {
   const [noResult, setNoResult] = useState(false);
+
+  const sorted = dataFiltered.sort((a, b) => {
+    const dateA = parse(a.ida, "dd/MM/yyyy", new Date()).getTime();
+    const dateB = parse(b.ida, "dd/MM/yyyy", new Date()).getTime();
+    if (dateA > dateB) {
+      return 1;
+    }
+    return -1;
+  });
+
   return (
     <>
       {showModal ? (
@@ -19,9 +30,12 @@ const Modal = ({
             <div className="relative my-6 mx-auto w-4/5">
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col bg-white outline-none focus:outline-none">
                 <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t">
-                  <h3 className="text-3xl font-semibold text-left">
-                    Leaked Information
-                  </h3>
+                  <div>
+                    <h3 className="text-3xl font-semibold text-left">
+                      Leaked Information
+                    </h3>
+                    <em>Remember that the list is ordered by date🚩</em>
+                  </div>
                   <div className="space-x-2">
                     <button
                       className="bg-amber-400 hover:bg-amber-300 text-white font-bold py-2 px-4 border-b-4 border-amber-500 hover:border-amber-400 rounded"
@@ -45,7 +59,7 @@ const Modal = ({
                   </h1>
                   <table>
                     <tbody>
-                      {dataFiltered.map((row, index) => (
+                      {sorted.map((row, index) => (
                         <tr key={index}>
                           <td className="text-gray-950 px-4 border-b-2">
                             <p className="font-bold">

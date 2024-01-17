@@ -121,7 +121,7 @@ const useFilter = () => {
     const searchData = data?.filter(({ AGENTES }: { AGENTES: string }) => {
       return AGENTES?.toLowerCase().includes(textInput.toLowerCase());
     });
-    if (searchData.length === 0 || textInput === "") {
+    if (searchData.length === 0) {
       handleClearFilter();
       setDate({ startDate: null!, endDate: null! });
       toast.error("No result😭", {
@@ -135,6 +135,9 @@ const useFilter = () => {
         progress: undefined,
         theme: "light",
       });
+    } else if (textInput === "") {
+      handleClearFilter();
+      setDate({ startDate: null!, endDate: null! });
     } else {
       setData(searchData);
     }
