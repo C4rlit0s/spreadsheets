@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { DataFilteredProps } from "../interfaces/interfaces";
 
 const useFilter = () => {
+  const customId = "custom-id-search";
   const [data, setData] = useState([]);
   const [dataFiltered, setDataFiltered] = useState<DataFilteredProps[]>([]);
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -112,8 +113,31 @@ const useFilter = () => {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleValueChange = (newValue: any) => {
-    setDate(newValue);
+  const handleValueChange = (dateValue: any) => {
+    setDate(dateValue);
+  };
+
+  const handleValueFilter = (textInput: string) => {
+    const searchData = data?.filter(({ AGENTES }: { AGENTES: string }) => {
+      return AGENTES?.toLowerCase().includes(textInput.toLowerCase());
+    });
+    if (searchData.length === 0 || textInput === "") {
+      handleClearFilter();
+      setDate({ startDate: null!, endDate: null! });
+      toast.error("No result😭", {
+        toastId: customId,
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } else {
+      setData(searchData);
+    }
   };
 
   const handleDrop = (
@@ -149,7 +173,6 @@ const useFilter = () => {
   const validNumberSheets = (e: any, inputField: boolean) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("numberSheets");
 
     if (numberSheets > 0) {
       if (inputField) {
@@ -189,6 +212,7 @@ const useFilter = () => {
     validNumberSheets,
     numberSheets,
     setNumberSheets,
+    handleValueFilter,
   };
 };
 

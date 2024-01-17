@@ -49,7 +49,7 @@ const Modal = ({
                         <tr key={index}>
                           <td className="text-gray-950 px-4 border-b-2">
                             <p className="font-bold">
-                              {`*Pasajero #${index + 1}*:
+                              {`*Pasajero*:
                               ${row.pasajero} / *Fecha de ida*:
                               ${row.ida}
                                / *Agente*: ${row.agentes}  ${

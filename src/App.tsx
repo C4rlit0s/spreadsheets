@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Modal from "./components/Modal";
 import ComponentNumber from "./components/NumberSheet";
 import airplane from "./assets/airplane.png";
+import Search from "./components/Search";
 
 function App() {
   const {
@@ -21,6 +22,7 @@ function App() {
     sendDataModal,
     setNumberSheets,
     validNumberSheets,
+    handleValueFilter,
   } = useFilter();
 
   const preventDefaultHandler = (e: React.DragEvent<HTMLElement>) => {
@@ -91,20 +93,25 @@ function App() {
       {data.length > 0 && (
         <>
           <div className="mb-4">
-            <p className="text-2xl font-semibold text-left">
-              Select a date range
+            <p className="text-2xl font-semibold text-left mb-2">
+              Select a date range or search by agents👇
             </p>
             <div className="flex justify-between">
-              <div className="w-1/2">
-                <Datepicker
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                  //@ts-expect-error
-                  value={date}
-                  onChange={handleValueChange}
-                  primaryColor={"amber"}
-                  displayFormat={"DD/MM/YYYY"}
-                  separator={"|"}
-                />
+              <div className="flex w-8/12 space-x-4">
+                <div className="flex w-1/2">
+                  <Datepicker
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    //@ts-expect-error
+                    value={date}
+                    onChange={handleValueChange}
+                    primaryColor={"amber"}
+                    displayFormat={"DD/MM/YYYY"}
+                    separator={"|"}
+                  />
+                </div>
+                <div className="w-1/2">
+                  <Search onChange={(e) => handleValueFilter(e)} />
+                </div>
               </div>
               <div className="flex space-x-4">
                 <button
