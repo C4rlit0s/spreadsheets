@@ -19,12 +19,23 @@ const useFilter = () => {
   const handleFilter = useCallback(() => {
     if (typeof date.startDate !== "object") {
       const filteredData = data?.filter((item) => {
-        const itemDate = parse(item["FECHA DE IDA"], "dd/MM/yyyy", new Date());
+        const departureDate = parse(
+          item["FECHA DE IDA"],
+          "dd/MM/yyyy",
+          new Date()
+        );
+        const returnDate = parse(
+          item["FECHA DE RETORNO"],
+          "dd/MM/yyyy",
+          new Date()
+        );
         const start = new Date(date.startDate);
         const end = new Date(date.endDate);
         return (
-          itemDate.getTime() >= start.getTime() &&
-          itemDate.getTime() <= end.getTime()
+          (departureDate.getTime() >= start.getTime() &&
+            departureDate.getTime() <= end.getTime()) ||
+          (returnDate.getTime() >= start.getTime() &&
+            returnDate.getTime() <= end.getTime())
         );
       });
 
